@@ -7,4 +7,5 @@ imblearn
 scikit-optimize # skopt
 lightgbm
 xgboost
+mlflow
 -e .
