@@ -1,5 +1,10 @@
 pandas
 numpy
 seaborn
-
+matplotlib
+scikit-learn
+imblearn
+scikit-optimize # skopt
+lightgbm
+xgboost
 -e .
