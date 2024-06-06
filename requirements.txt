@@ -8,4 +8,6 @@ scikit-optimize # skopt
 lightgbm
 xgboost
 mlflow
+streamlit
+dill
 -e .

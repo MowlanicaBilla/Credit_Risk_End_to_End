@@ -7,13 +7,13 @@ from sklearn.ensemble import RandomForestClassifier
 from lightgbm import LGBMClassifier
 from xgboost import XGBClassifier
 
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, roc_auc_score
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, roc_auc_score, make_scorer
 from sklearn.model_selection import cross_val_score
 from skopt import BayesSearchCV
 from skopt.space import Real, Integer
 
 from src.exception import CustomException
-from src.logger import logging
+from src.logger import logger
 from src.utils import save_object, evaluate_models
 
 @dataclass
@@ -26,7 +26,7 @@ class ModelTrainer:
 
     def initiate_model_trainer(self, train_array, test_array):
         try:
-            logging.info("Split training and test input data")
+            logger.info("Split training and test input data")
             X_train, y_train, X_test, y_test = (
                 train_array[:, :-1],
                 train_array[:, -1],
@@ -72,18 +72,18 @@ class ModelTrainer:
 
             best_models = {}
             for model_name in models:
-                logging.info(f"Training {model_name} model")
+                logger.info(f"Training {model_name} model")
                 gs = BayesSearchCV(models[model_name], params[model_name], cv=10, scoring=scoring,
                                    refit="roc_auc", random_state=500, n_iter=10, n_jobs=-1, verbose=1)
                 gs.fit(X_train, y_train)
                 best_models[model_name] = gs.best_estimator_
-                logging.info(f"Best {model_name} model: {gs.best_estimator_}")
+                logger.info(f"Best {model_name} model: {gs.best_estimator_}")
 
             best_model_name, best_model = max(best_models.items(), key=lambda item: cross_val_score(item[1], X_train, y_train, cv=10, scoring='roc_auc').mean())
 
             if cross_val_score(best_model, X_train, y_train, cv=10, scoring='roc_auc').mean() < 0.6:
                 raise CustomException("No best model found")
-            logging.info(f"Best found model: {best_model_name} on both training and testing dataset")
+            logger.info(f"Best found model: {best_model_name} on both training and testing dataset")
 
             save_object(
                 file_path=self.model_trainer_config.trained_model_file_path,

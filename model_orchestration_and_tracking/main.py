@@ -19,11 +19,11 @@ from mlflow.tracking import MlflowClient
 from mlflow.entities import ViewType
 from mlflow.models.signature import infer_signature
 
-from prefect import flow, task
-from prefect.task_runners import SequentialTaskRunner
-from prefect.deployments import Deployment
-from prefect.server.schemas.schedules import CronSchedule, IntervalSchedule
-from prefect.infrastructure import Process
+# from prefect import flow, task
+# from prefect.task_runners import SequentialTaskRunner
+# from prefect.deployments import Deployment
+# from prefect.server.schemas.schedules import CronSchedule, IntervalSchedule
+# from prefect.infrastructure import Process
 
 try:
     import scripts.data_preparation as dp

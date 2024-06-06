@@ -1,0 +1,55 @@
+<html>
+<body>
+    <div class="login">
+       <h1>Credit Risk Monitoring</h1>
+   
+       <form action="{{ url_for('predict_datapoint')}}" method="post">
+        <h1>
+            <legend>Credit Risk Meter</legend>
+        </h1>
+        <div class="mb-3">
+            <label class="form-label">Duration</label>
+            <input class="form-control" type="number" name="duration" placeholder="Enter duration" required />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Credit Amount</label>
+            <input class="form-control" type="number" name="credit_amount" placeholder="Enter credit amount" required />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Age</label>
+            <input class="form-control" type="number" name="age" placeholder="Enter age" required />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Checking Status</label>
+            <select class="form-control" name="checking_status" placeholder="Enter checking status" required>
+                <option class="placeholder" selected disabled value="">Select checking status</option>
+                <!-- Add options here -->
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Credit History</label>
+            <select class="form-control" name="credit_history" placeholder="Enter credit history" required>
+                <option class="placeholder" selected disabled value="">Select credit history</option>
+                <!-- Add options here -->
+            </select>
+        </div>
+        <!-- Add other input fields for categorical columns similarly -->
+        <div class="mb-3">
+            <label class="form-label">Reading Score out of 100</label>
+            <input class="form-control" type="number" name="reading_score"
+                placeholder="Enter your Reading score" min='0' max='100' />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Writing Score out of 100</label>
+            <input class="form-control" type="number" name="writing_score"
+                placeholder="Enter your Writing Score" min='0' max='100' />
+        </div>
+        <div class="mb-3">
+            <input class="btn btn-primary" type="submit" value="Predict" required />
+        </div>
+    </form>
+    <h2>
+       THE prediction is {{results}}
+    </h2>
+   <body>
+</html>
