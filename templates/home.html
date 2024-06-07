@@ -1,55 +1,188 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credit Risk Prediction</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
 <body>
-    <div class="login">
-       <h1>Credit Risk Monitoring</h1>
-   
-       <form action="{{ url_for('predict_datapoint')}}" method="post">
-        <h1>
-            <legend>Credit Risk Meter</legend>
-        </h1>
-        <div class="mb-3">
-            <label class="form-label">Duration</label>
-            <input class="form-control" type="number" name="duration" placeholder="Enter duration" required />
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Credit Amount</label>
-            <input class="form-control" type="number" name="credit_amount" placeholder="Enter credit amount" required />
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Age</label>
-            <input class="form-control" type="number" name="age" placeholder="Enter age" required />
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Checking Status</label>
-            <select class="form-control" name="checking_status" placeholder="Enter checking status" required>
-                <option class="placeholder" selected disabled value="">Select checking status</option>
-                <!-- Add options here -->
-            </select>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Credit History</label>
-            <select class="form-control" name="credit_history" placeholder="Enter credit history" required>
-                <option class="placeholder" selected disabled value="">Select credit history</option>
-                <!-- Add options here -->
-            </select>
-        </div>
-        <!-- Add other input fields for categorical columns similarly -->
-        <div class="mb-3">
-            <label class="form-label">Reading Score out of 100</label>
-            <input class="form-control" type="number" name="reading_score"
-                placeholder="Enter your Reading score" min='0' max='100' />
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Writing Score out of 100</label>
-            <input class="form-control" type="number" name="writing_score"
-                placeholder="Enter your Writing Score" min='0' max='100' />
-        </div>
-        <div class="mb-3">
-            <input class="btn btn-primary" type="submit" value="Predict" required />
-        </div>
+    <h1>Credit Risk Prediction Form</h1>
+    <form action="/predictdata" method="post">
+        <label for="duration">Duration:</label>
+        <input type="number" id="duration" name="duration" required><br>
+
+        <label for="credit_amount">Credit Amount:</label>
+        <input type="number" id="credit_amount" name="credit_amount" required><br>
+
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" required><br>
+
+        <label for="checking_status">Checking Status:</label>
+        <select id="checking_status" name="checking_status" required>
+            <option value=""></option>
+            <option value="<0"><0</option>
+            <option value="0<=X<200">0<=X<200</option>
+            <option value="no checking">no checking</option>
+            <option value=">=200">>=200</option>
+        </select><br>
+
+        <label for="credit_history">Credit History:</label>
+        <select id="credit_history" name="credit_history" required>
+            <option value=""></option>
+            <option value="critical/other existing credit">critical/other existing credit</option>
+            <option value="existing paid">existing paid</option>
+            <option value="delayed previously">delayed previously</option>
+            <option value="no credits/all paid">no credits/all paid</option>
+            <option value="all paid">all paid</option>
+        </select><br>
+
+        <label for="purpose">Purpose:</label>
+        <select id="purpose" name="purpose" required>
+            <option value=""></option>
+            <option value="radio/tv">radio/tv</option>
+            <option value="education">education</option>
+            <option value="furniture/equipment">furniture/equipment</option>
+            <option value="new car">new car</option>
+            <option value="used car">used car</option>
+            <option value="business">business</option>
+            <option value="domestic appliance">domestic appliance</option>
+            <option value="repairs">repairs</option>
+            <option value="other">other</option>
+            <option value="retraining">retraining</option>
+        </select><br>
+
+        <label for="savings_status">Savings Status:</label>
+        <select id="savings_status" name="savings_status" required>
+            <option value=""></option>
+            <option value="no known savings">no known savings</option>
+            <option value="<100"><100</option>
+            <option value="500<=X<1000">500<=X<1000</option>
+            <option value=">=1000">>=1000</option>
+            <option value="100<=X<500">100<=X<500</option>
+        </select><br>
+
+        <label for="employment">Employment:</label>
+        <select id="employment" name="employment" required>
+            <option value=""></option>
+            <option value=">=7">>=7</option>
+            <option value="1<=X<4">1<=X<4</option>
+            <option value="4<=X<7">4<=X<7</option>
+            <option value="unemployed">unemployed</option>
+            <option value="<1"><1</option>
+        </select><br>
+
+        <label for="installment_commitment">Installment Commitment:</label>
+        <select id="installment_commitment" name="installment_commitment" required>
+            <option value=""></option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select><br>
+
+        <label for="personal_status">Personal Status:</label>
+        <select id="personal_status" name="personal_status" required>
+            <option value=""></option>
+            <option value="male single">male single</option>
+            <option value="female div/dep/mar">female div/dep/mar</option>
+            <option value="male div/sep">male div/sep</option>
+            <option value="male mar/wid">male mar/wid</option>
+        </select><br>
+
+        <label for="other_parties">Other Parties:</label>
+        <select id="other_parties" name="other_parties" required>
+            <option value=""></option>
+            <option value="none">none</option>
+            <option value="guarantor">guarantor</option>
+            <option value="co applicant">co applicant</option>
+        </select><br>
+
+        <label for="residence_since">Residence Since:</label>
+        <select id="residence_since" name="residence_since" required>
+            <option value=""></option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select><br>
+
+        <label for="property_magnitude">Property Magnitude:</label>
+        <select id="property_magnitude" name="property_magnitude" required>
+            <option value=""></option>
+            <option value="real estate">real estate</option>
+            <option value="life insurance">life insurance</option>
+            <option value="no known property">no known property</option>
+            <option value="car">car</option>
+        </select><br>
+
+        <label for="other_payment_plans">Other Payment Plans:</label>
+        <select id="other_payment_plans" name="other_payment_plans" required>
+            <option value=""></option>
+            <option value="none">none</option>
+            <option value="bank">bank</option>
+            <option value="stores">stores</option>
+        </select><br>
+
+        <label for="housing">Housing:</label>
+        <select id="housing" name="housing" required>
+            <option value=""></option>
+            <option value="own">own</option>
+            <option value="for free">for free</option>
+            <option value="rent">rent</option>
+        </select><br>
+
+        <label for="existing_credits">Existing Credits:</label>
+        <select id="existing_credits" name="existing_credits" required>
+            <option value=""></option>
+            <option value="1">1</option>
+            <option value="2">2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select><br>
+
+        <label for="job">Job:</label>
+        <select id="job" name="job" required>
+            <option value=""></option>
+            <option value="skilled">skilled</option>
+            <option value="unskilled resident">unskilled resident</option>
+            <option value="high qualif/self emp/mgmt">high qualif/self emp/mgmt</option>
+            <option value="unemp/unskilled non res">unemp/unskilled non res</option>
+        </select><br>
+
+        <label for="num_dependents">Number of Dependents:</label>
+        <select id="num_dependents" name="num_dependents" required>
+            <option value=""></option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+        </select><br>
+
+        <label for="own_telephone">Own Telephone:</label>
+        <select id="own_telephone" name="own_telephone" required>
+            <option value=""></option>
+            <option value="none">none</option>
+            <option value="yes">yes</option>
+        </select><br>
+
+        <label for="foreign_worker">Foreign Worker:</label>
+        <select id="foreign_worker" name="foreign_worker" required>
+            <option value=""></option>
+            <option value="no">no</option>
+            <option value="yes">yes</option>
+        </select><br>
+
+        <input type="submit" value="Submit">
     </form>
+
     <h2>
-       THE prediction is {{results}}
+        {% if results == 1.0 %}
+            The prediction is good credit risk.
+        {% elif results == 0.0 %}
+            The prediction is bad credit risk.
+        {% else %}
+            No prediction available.
+        {% endif %}
     </h2>
-   <body>
+</body>
 </html>
+

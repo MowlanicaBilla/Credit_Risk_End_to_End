@@ -39,23 +39,55 @@ class DataTransformation:
         try:
             # Define numerical and categorical columns
             numerical_columns = ['duration', 'credit_amount', 'age']
-            categorical_columns = ['checking_status', 'credit_history','purpose',
-                               'savings_status','employment','installment_commitment',
-                               'personal_status','other_parties', 'residence_since', 
-                               'property_magnitude', 'other_payment_plans', 'housing', 
-                               'existing_credits', 'job','num_dependents', 'own_telephone', 
-                               'foreign_worker']
+            categorical_columns = ['checking_status', 'credit_history', 'purpose',
+                                'savings_status', 'employment', 'installment_commitment',
+                                'personal_status', 'other_parties', 'residence_since', 
+                                'property_magnitude', 'other_payment_plans', 'housing', 
+                                'existing_credits', 'job', 'num_dependents', 'own_telephone', 
+                                'foreign_worker']
             
+            # Specify the categories for each categorical feature
+            checking_status_categories = ['<0', '0<=X<200', 'no checking', '>=200']
+            credit_history_categories = ['critical/other existing credit', 'existing paid',
+                'delayed previously', 'no credits/all paid', 'all paid']
+            purpose_categories = ['radio/tv', 'education', 'furniture/equipment', 'new car',
+                'used car', 'business', 'domestic appliance', 'repairs', 'other',
+                'retraining']
+            savings_status_categories = ['no known savings', '<100', '500<=X<1000', '>=1000', '100<=X<500']
+            employment_categories = ['>=7', '1<=X<4', '4<=X<7', 'unemployed', '<1']
+            installment_commitment_categories = [1, 2, 3, 4]
+            personal_status_categories = ['male single', 'female div/dep/mar', 'male div/sep',
+                'male mar/wid']
+            other_parties_categories = ['none', 'guarantor', 'co applicant']
+            residence_since_categories = [1, 2, 3, 4]
+            property_magnitude_categories = ['real estate', 'life insurance', 'no known property', 'car']
+            other_payment_plans_categories = ['none', 'bank', 'stores']
+            housing_categories = ['own', 'for free', 'rent']
+            existing_credits_categories = [1, 2, 3, 4]
+            job_categories = ['skilled', 'unskilled resident', 'high qualif/self emp/mgmt',
+                'unemp/unskilled non res']
+            num_dependents_categories = [1, 2]
+            own_telephone_categories = ['none', 'yes']
+            foreign_worker_categories = ['no', 'yes']
+            
+            # Combine all categories into a list
+            all_categories = [checking_status_categories, credit_history_categories, purpose_categories, 
+                            savings_status_categories, employment_categories, installment_commitment_categories, 
+                            personal_status_categories, other_parties_categories, residence_since_categories, 
+                            property_magnitude_categories, other_payment_plans_categories, housing_categories, 
+                            existing_credits_categories, job_categories, num_dependents_categories, 
+                            own_telephone_categories, foreign_worker_categories]
+
             # Numerical pipeline
             num_pipeline = Pipeline(steps=[
-            ("imputer", SimpleImputer(strategy="median")),
-            ("scaler", StandardScaler())
+                ("imputer", SimpleImputer(strategy="median")),
+                ("scaler", StandardScaler())
             ])
 
             # Categorical pipeline
             cat_pipeline = Pipeline(steps=[
                 ("imputer", SimpleImputer(strategy="most_frequent")),
-                ("ordinal_encoder", OrdinalEncoder())
+                ("ordinal_encoder", OrdinalEncoder(categories=all_categories))
             ])
 
             logger.info(f"Categorical columns: {categorical_columns}")
@@ -68,9 +100,10 @@ class DataTransformation:
             ])
 
             return preprocessor
-        
+    
         except Exception as e:
             raise CustomException(e, sys)
+
         
     def initiate_data_transformation(self, train_path, test_path):
         try:

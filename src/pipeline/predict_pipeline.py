@@ -1,12 +1,7 @@
 import sys
 import pandas as pd
-
 from src.exception import CustomException
 from src.utils import load_object
-
-'''
-Custom data class will be responsible in mapping all the inputs that we are giving in the HTML to the back end with this particular values
-'''
 
 class PredictPipeline:
     def __init__(self) -> None:
@@ -14,8 +9,8 @@ class PredictPipeline:
 
     def predict(self, features):
         try:
-            model_path = '../credit_risk_end_to_end/artifacts/model.pkl'
-            preprocessor_path = '../credit_risk_end_to_end/artifacts/preprocessor.pkl'
+            model_path = 'artifacts/model.pkl'
+            preprocessor_path = 'artifacts/preprocessor.pkl'
             model = load_object(file_path=model_path)
             preprocessor = load_object(file_path=preprocessor_path)
             data_scaled = preprocessor.transform(features)
@@ -23,7 +18,6 @@ class PredictPipeline:
             return preds
         except Exception as e:
             raise CustomException(e, sys)
-        
 
 class CustomData:
     def __init__(self,
