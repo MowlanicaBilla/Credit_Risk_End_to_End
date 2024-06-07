@@ -176,9 +176,9 @@
 
     <h2>
         {% if results == 1.0 %}
-            The prediction is good credit risk.
+            The user has Good credit
         {% elif results == 0.0 %}
-            The prediction is bad credit risk.
+            The user has bad credit and it might be risky to give loan.
         {% else %}
             No prediction available.
         {% endif %}
